@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: sans-serif;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 🌟 Partículas */
+.lights::before,
+.lights::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: orange;
+  box-shadow:
+    0 0 10px orange,
+    100px 50px orange,
+    -80px 120px orange,
+    60px 200px orange,
+    -120px 300px orange;
+  animation: float 6s linear infinite;
+}
+
+.lights::after {
+  animation-delay: 3s;
+}
+
+/* 🌱 Flores */
+.flowers {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  transform: scale(0.95);
+}
+
+.flower {
+  position: absolute;
+  bottom: 0;
+  transform-origin: bottom center;
+  animation: sway 5s ease-in-out infinite;
+}
+
+.f1 { left: 60px; height: 280px; animation-delay: 0s; }
+.f2 { left: 140px; height: 320px; animation-delay: 1s; }
+.f3 { left: 220px; height: 260px; animation-delay: 2s; }
+
+/* 🌿 Tallo */
+.stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(#0f0, #064);
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+
+/* 🌼 Flor */
+.petals {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #ffd18a, #ff8c00);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 15px #ff8c00,
+    0 0 30px rgba(255,140,0,0.7);
+}
+
+/* 🎞️ Animaciones */
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes float {
+  from { transform: translateY(0); opacity: 0.8; }
+  to { transform: translateY(-600px); opacity: 0; }
+}
