@@ -8,7 +8,7 @@
 <style>
 body{
   margin:0;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   height:100vh;
   overflow:hidden;
   background:linear-gradient(180deg,#ffd1dc,#ffb6c1,#ffc0cb);
@@ -38,7 +38,6 @@ body{
 .heart{
   position:absolute;
   top:-10%;
-  font-size:20px;
   color:rgba(255,105,180,0.6);
   animation:fall linear infinite;
 }
@@ -54,51 +53,95 @@ body{
   position:absolute;
   bottom:0;
   width:100%;
-  height:200px;
+  height:320px;
   display:flex;
   justify-content:center;
-  gap:60px;
+  gap:90px;
   z-index:4;
 }
 
 .tulip{
   position:relative;
-  width:60px;
+  width:120px;
+  height:300px;
 }
 
+/* TALLO (FIJO) */
 .stem{
-  width:6px;
-  height:120px;
-  background:#3a7d44;
-  margin:0 auto;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:190px;
+  background:linear-gradient(180deg,#3a7d44,#2e5f34);
+  border-radius:10px;
 }
 
+/* FLOR */
 .flower{
-  width:40px;
-  height:50px;
-  background:#9b59b6;
-  border-radius:20px 20px 10px 10px;
-  margin:0 auto;
-  animation:sway 4s ease-in-out infinite;
+  position:absolute;
+  bottom:170px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90px;
+  height:100px;
+  animation:sway 5s ease-in-out infinite;
   transform-origin:bottom center;
 }
 
-.leaf{
+/* PETALOS */
+.petal{
   position:absolute;
-  width:30px;
-  height:15px;
-  background:#4caf50;
-  border-radius:20px;
-  top:70px;
-  animation:sway 4s ease-in-out infinite;
+  width:45px;
+  height:80px;
+  background:linear-gradient(180deg,#b47ddb,#8e44ad);
+  border-radius:60% 60% 40% 40%;
 }
 
-.leaf.left{ left:-25px; transform-origin:right center; }
-.leaf.right{ right:-25px; transform-origin:left center; }
+.petal.left{
+  left:0;
+  transform:rotate(-12deg);
+}
 
+.petal.center{
+  left:22px;
+  top:-8px;
+  height:90px;
+  background:linear-gradient(180deg,#c39bd3,#9b59b6);
+}
+
+.petal.right{
+  right:0;
+  transform:rotate(12deg);
+}
+
+/* HOJAS */
+.leaf{
+  position:absolute;
+  width:70px;
+  height:30px;
+  background:linear-gradient(180deg,#5fae6e,#3e8e4d);
+  border-radius:50%;
+  animation:sway 5s ease-in-out infinite;
+}
+
+.leaf.left{
+  left:-55px;
+  top:140px;
+  transform-origin:right center;
+}
+
+.leaf.right{
+  right:-55px;
+  top:120px;
+  transform-origin:left center;
+}
+
+/* MOVIMIENTO */
 @keyframes sway{
   0%{ transform:rotate(0deg); }
-  50%{ transform:rotate(6deg); }
+  50%{ transform:rotate(7deg); }
   100%{ transform:rotate(0deg); }
 }
 </style>
@@ -115,21 +158,33 @@ body{
 <!-- TULIPANES -->
 <div class="tulips">
   <div class="tulip">
-    <div class="flower"></div>
+    <div class="flower">
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
     <div class="leaf left"></div>
     <div class="leaf right"></div>
     <div class="stem"></div>
   </div>
 
   <div class="tulip">
-    <div class="flower"></div>
+    <div class="flower">
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
     <div class="leaf left"></div>
     <div class="leaf right"></div>
     <div class="stem"></div>
   </div>
 
   <div class="tulip">
-    <div class="flower"></div>
+    <div class="flower">
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
     <div class="leaf left"></div>
     <div class="leaf right"></div>
     <div class="stem"></div>
@@ -164,14 +219,14 @@ function createHeart(){
   heart.className="heart";
   heart.innerHTML="♥";
   heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=3+Math.random()*5+"s";
-  heart.style.fontSize=12+Math.random()*20+"px";
+  heart.style.animationDuration=4+Math.random()*6+"s";
+  heart.style.fontSize=14+Math.random()*22+"px";
   document.body.appendChild(heart);
 
-  setTimeout(()=>heart.remove(),8000);
+  setTimeout(()=>heart.remove(),9000);
 }
 
-setInterval(createHeart,400);
+setInterval(createHeart,350);
 </script>
 
 </body>
