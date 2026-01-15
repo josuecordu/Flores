@@ -6,227 +6,240 @@
 <title>Todo empezó hace</title>
 
 <style>
-/* ====== FONDO ====== */
-body {
-  margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at top, #ffd6e8, #ff9fc4);
-  overflow: hidden;
-  font-family: 'Arial', sans-serif;
-  color: white;
+body{
+  margin:0;
+  min-height:100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #ffd1dc, #f7a1c4, #e86aa3);
+  overflow:hidden;
+  color:#fff;
 }
 
-/* ====== CONTADOR ====== */
-.counter {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  text-align: center;
-  font-size: 1.5rem;
-  z-index: 10;
+/* CONTADOR */
+.counter{
+  text-align:center;
+  padding:1.5rem 1rem;
+  font-size:1.3rem;
+  font-weight:600;
+  z-index:10;
+  position:relative;
 }
 
-.counter span {
-  font-weight: bold;
-}
-
-/* ====== CORAZONES ====== */
-.heart {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: pink;
-  transform: rotate(45deg);
+/* CORAZONES */
+.heart{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#ff7eb3;
+  transform:rotate(45deg);
   animation: fall linear infinite;
-  opacity: 0.8;
+  opacity:.7;
 }
-
 .heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: pink;
-  border-radius: 50%;
+.heart::after{
+  content:"";
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#ff7eb3;
+  border-radius:50%;
+}
+.heart::before{top:-7px;left:0;}
+.heart::after{left:-7px;top:0;}
+
+@keyframes fall{
+  from{transform:translateY(-10vh) rotate(45deg);}
+  to{transform:translateY(110vh) rotate(45deg);}
 }
 
-.heart::before {
-  top: -8px;
-  left: 0;
+/* SUELO */
+.ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40%;
+  background:linear-gradient(to top, #000, transparent);
 }
 
-.heart::after {
-  left: -8px;
-  top: 0;
+/* FLORES */
+.flowers{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:120px;
+  z-index:5;
 }
 
-@keyframes fall {
-  from {
-    transform: translateY(-10vh) rotate(45deg);
-  }
-  to {
-    transform: translateY(110vh) rotate(45deg);
-  }
+.tulip{
+  position:relative;
+  width:160px;
+  height:420px;
 }
 
-/* ====== TULIPANES ====== */
-.tulips {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 45%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 80px;
+/* TALLO */
+.stem{
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:260px;
+  background:linear-gradient(to top,#1e7f5c,#3fbf9a);
+  border-radius:10px;
 }
 
-.tulip {
-  position: relative;
-  width: 140px;
+/* HOJAS */
+.leaf{
+  position:absolute;
+  bottom:90px;
+  width:80px;
+  height:140px;
+  background:linear-gradient(135deg,#3fbf9a,#1e7f5c);
+  border-radius:100% 0 100% 0;
+  opacity:.9;
+}
+.leaf.left{
+  left:-55px;
+  transform:rotate(-25deg);
+}
+.leaf.right{
+  right:-55px;
+  transform:rotate(25deg) scaleX(-1);
 }
 
-.t1 { animation: sway 6s ease-in-out infinite; }
-.t2 { animation: sway 6s ease-in-out infinite 1.5s; }
-.t3 { animation: sway 6s ease-in-out infinite 3s; }
-
-.flower {
-  position: relative;
-  width: 140px;
-  height: 120px;
+/* CABEZA FLOR */
+.flower-head{
+  position:absolute;
+  bottom:240px;
+  left:50%;
+  transform-origin:bottom center;
+  animation:sway 6s ease-in-out infinite;
 }
 
-.flower span {
-  position: absolute;
-  width: 90px;
-  height: 120px;
-  background: radial-gradient(circle at top, #ffd1dc, #ff8fb1, #ff5c8a);
-  border-radius: 60% 60% 50% 50%;
-  filter: drop-shadow(0 0 14px rgba(255,140,180,0.6));
+/* PÉTALOS */
+.petal{
+  position:absolute;
+  width:90px;
+  height:130px;
+  background:radial-gradient(circle at top, #ffd6e8, #ff6fae);
+  border-radius:60% 60% 40% 40%;
+  box-shadow:0 0 25px rgba(255,120,180,.6);
 }
 
-.flower span:nth-child(1) {
-  transform: rotate(-20deg) translateX(-25px);
+.petal.center{
+  left:-45px;
+  z-index:3;
+}
+.petal.left{
+  left:-85px;
+  transform:rotate(-18deg);
+  opacity:.95;
+}
+.petal.right{
+  left:-5px;
+  transform:rotate(18deg);
+  opacity:.95;
 }
 
-.flower span:nth-child(2) {
-  transform: rotate(0deg);
+/* BRILLO */
+.glow{
+  position:absolute;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, rgba(255,170,210,.6), transparent);
+  border-radius:50%;
+  top:-20px;
+  left:-60px;
+  filter:blur(10px);
 }
 
-.flower span:nth-child(3) {
-  transform: rotate(20deg) translateX(25px);
-}
-
-.stem {
-  width: 10px;
-  height: 180px;
-  background: linear-gradient(to bottom, #2e8b57, #1f5f3f);
-  margin: 0 auto;
-  border-radius: 10px;
-}
-
-.leaves {
-  position: absolute;
-  bottom: 90px;
-  left: 50%;
-  width: 120px;
-  height: 60px;
-  transform: translateX(-50%);
-}
-
-.leaves::before,
-.leaves::after {
-  content: "";
-  position: absolute;
-  width: 60px;
-  height: 100px;
-  background: linear-gradient(to top, #2e8b57, #5fbf90);
-  border-radius: 100% 0 100% 0;
-}
-
-.leaves::before {
-  left: -20px;
-  transform: rotate(-25deg);
-}
-
-.leaves::after {
-  right: -20px;
-  transform: rotate(25deg) scaleX(-1);
-}
-
-@keyframes sway {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
+/* ANIMACIÓN */
+@keyframes sway{
+  0%,100%{transform:translateX(-50%) rotate(-4deg);}
+  50%{transform:translateX(-50%) rotate(4deg);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- CONTADOR -->
 <div class="counter">
-  todo empezó hace:
-  <br>
+  Todo empezó hace:<br>
   <span id="time"></span>
 </div>
 
-<!-- TULIPANES -->
-<div class="tulips">
-  <div class="tulip t1">
-    <div class="flower"><span></span><span></span><span></span></div>
+<div class="ground"></div>
+
+<div class="flowers">
+  <div class="tulip">
     <div class="stem"></div>
-    <div class="leaves"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower-head">
+      <div class="glow"></div>
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
   </div>
 
-  <div class="tulip t2">
-    <div class="flower"><span></span><span></span><span></span></div>
+  <div class="tulip">
     <div class="stem"></div>
-    <div class="leaves"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower-head" style="animation-delay:1.5s;">
+      <div class="glow"></div>
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
   </div>
 
-  <div class="tulip t3">
-    <div class="flower"><span></span><span></span><span></span></div>
+  <div class="tulip">
     <div class="stem"></div>
-    <div class="leaves"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower-head" style="animation-delay:3s;">
+      <div class="glow"></div>
+      <div class="petal left"></div>
+      <div class="petal center"></div>
+      <div class="petal right"></div>
+    </div>
   </div>
 </div>
 
 <script>
-/* ====== CONTADOR ====== */
+/* CONTADOR */
 const startDate = new Date("2025-09-08T21:00:00");
 
-function updateCounter() {
+function updateCounter(){
   const now = new Date();
-  let diff = Math.floor((now - startDate) / 1000);
+  let diff = Math.floor((now - startDate)/1000);
 
-  const days = Math.floor(diff / 86400);
+  const days = Math.floor(diff/86400);
   diff %= 86400;
-  const hours = Math.floor(diff / 3600);
+  const hours = Math.floor(diff/3600);
   diff %= 3600;
-  const minutes = Math.floor(diff / 60);
-  const seconds = diff % 60;
+  const minutes = Math.floor(diff/60);
+  const seconds = diff%60;
 
   document.getElementById("time").textContent =
-    `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+    `${days} días, ${hours} horas, ${minutes} minutos y ${seconds} segundos`;
 }
-
-setInterval(updateCounter, 1000);
+setInterval(updateCounter,1000);
 updateCounter();
 
-/* ====== CORAZONES ====== */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-  heart.style.opacity = Math.random();
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 8000);
+/* CORAZONES */
+for(let i=0;i<30;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.opacity=Math.random();
+  document.body.appendChild(h);
 }
-
-setInterval(createHeart, 300);
 </script>
 
 </body>
