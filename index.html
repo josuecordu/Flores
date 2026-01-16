@@ -148,7 +148,7 @@ function updateCounter() {
     const h = Math.floor(diff / 3600); diff %= 3600;
     const m = Math.floor(diff / 60);
     const s = diff % 60;
-    counter.innerText = `Todo empezó hace: ${d} días ${h} h ${m} min ${s} s`;
+    counter.innerText = `Nuestra historia comenzó hace: ${d} días ${h} h ${m} min ${s} s`;
 }
 setInterval(updateCounter, 1000);
 updateCounter();
