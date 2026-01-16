@@ -95,7 +95,7 @@ html, body {
 <div id="centerText">agregar poema</div>
 
 <!-- AUDIO DE FONDO -->
-<audio id="bgMusic" src="Luis Miguel - Sabes Una Cosa(MP3_160K).mp3" autoplay loop></audio>
+<audio id="bgMusic" src="Luis Miguel - Sabes Una Cosa(MP3_160K).mp3" loop></audio>
 
 <script>
 /* ===== CONTADOR ===== */
@@ -148,6 +148,19 @@ document.addEventListener("touchstart", e => {
 document.addEventListener("touchmove", e => {
     if (e.touches.length === 1)
         spawnTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
+});
+
+/* ===== AUDIO DE FONDO ===== */
+const bgMusic = document.getElementById('bgMusic');
+
+// Intentar reproducir automáticamente
+bgMusic.play().catch(() => {
+    // Si falla (móviles), reproducir al primer toque
+    const playOnTouch = () => {
+        bgMusic.play().catch(err => console.log(err));
+        document.removeEventListener('touchstart', playOnTouch);
+    };
+    document.addEventListener('touchstart', playOnTouch);
 });
 </script>
 
