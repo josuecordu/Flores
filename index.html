@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Todo empezó hace</title>
 
-<!-- GOOGLE FONTS: Dancing Script -->
+<!-- GOOGLE FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
@@ -38,18 +38,51 @@ html, body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* ===== TEXTO CENTRAL ===== */
-#centerText {
+/* ===== BOTON CENTRAL ===== */
+#viewButton {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Dancing Script', cursive;
     font-size: 48px;
-    color: #c2185b; /* Rosado oscuro */
+    color: #c2185b;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     z-index: 20;
-    pointer-events: none;
     text-shadow: 0 0 10px rgba(194,24,91,0.7);
+    transition: transform 0.2s, background 0.3s;
+}
+
+#viewButton:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===== POEMA ===== */
+#poem {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Dancing Script', cursive;
+    font-size: 36px;
+    color: #c2185b;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: none; /* oculto hasta presionar botón */
+    z-index: 19;
+    max-width: 90%;
+    box-shadow: 0 0 20px rgba(194,24,91,0.5);
 }
 
 /* ===== CORAZONES CAYENDO ===== */
@@ -91,8 +124,15 @@ html, body {
     <div id="counter"></div>
 </div>
 
-<!-- TEXTO CENTRAL -->
-<div id="centerText">agregar poema</div>
+<!-- BOTON CENTRAL -->
+<div id="viewButton">Ver</div>
+
+<!-- POEMA -->
+<div id="poem">
+    Aquí va tu poema romántico,<br>
+    escrito con todo el corazón.<br>
+    Puedes reemplazar este texto con tu propio poema.
+</div>
 
 <!-- AUDIO DE FONDO -->
 <audio id="bgMusic" src="Luis Miguel - Sabes Una Cosa(MP3_160K).mp3" loop></audio>
@@ -139,7 +179,6 @@ function spawnTouchHearts(x, y) {
     }
 }
 
-/* ===== EVENTOS TOUCH ===== */
 document.addEventListener("touchstart", e => {
     if (e.touches.length === 1)
         spawnTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
@@ -150,17 +189,20 @@ document.addEventListener("touchmove", e => {
         spawnTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
 });
 
-/* ===== AUDIO DE FONDO ===== */
+/* ===== BOTON VER ===== */
+const viewButton = document.getElementById('viewButton');
+const poem = document.getElementById('poem');
 const bgMusic = document.getElementById('bgMusic');
 
-// Intentar reproducir automáticamente
-bgMusic.play().catch(() => {
-    // Si falla (móviles), reproducir al primer toque
-    const playOnTouch = () => {
-        bgMusic.play().catch(err => console.log(err));
-        document.removeEventListener('touchstart', playOnTouch);
-    };
-    document.addEventListener('touchstart', playOnTouch);
+viewButton.addEventListener('click', () => {
+    // Reproducir música
+    bgMusic.play().catch(err => console.log(err));
+
+    // Mostrar poema
+    poem.style.display = 'block';
+
+    // Ocultar el botón
+    viewButton.style.display = 'none';
 });
 </script>
 
