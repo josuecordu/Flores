@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Todo empezó hace</title>
 
+<!-- GOOGLE FONTS: Dancing Script -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
 <style>
 html, body {
     margin: 0;
@@ -33,6 +36,20 @@ html, body {
     font-size: 16px;
     backdrop-filter: blur(6px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ===== TEXTO CENTRAL ===== */
+#centerText {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Dancing Script', cursive;
+    font-size: 48px;
+    color: #c2185b; /* Rosado oscuro */
+    z-index: 20;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(194,24,91,0.7);
 }
 
 /* ===== CORAZONES CAYENDO ===== */
@@ -69,9 +86,16 @@ html, body {
 
 <body>
 
+<!-- CONTADOR -->
 <div id="counter-wrapper">
     <div id="counter"></div>
 </div>
+
+<!-- TEXTO CENTRAL -->
+<div id="centerText">agregar poema</div>
+
+<!-- AUDIO DE FONDO -->
+<audio id="bgMusic" src="Luis Miguel - Sabes Una Cosa(MP3_160K).mp3" autoplay loop></audio>
 
 <script>
 /* ===== CONTADOR ===== */
