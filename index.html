@@ -6,56 +6,59 @@
 <title>Todo empezó hace</title>
 
 <style>
-/* ====== FONDO ====== */
+/* ===== FONDO ===== */
 body {
   margin: 0;
-  height: 100vh;
   overflow: hidden;
   font-family: 'Arial', sans-serif;
-  background: radial-gradient(circle at top, #ffd6e8, #f7a8c9);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  color: #fff;
+  background: radial-gradient(circle at top, #ffd1dc, #f7a1c4, #f48fb1);
 }
 
-/* ====== CONTADOR ====== */
+/* ===== CONTADOR ===== */
 #contador {
-  margin-top: 30px;
+  position: fixed;
+  top: 20px;
+  width: 100%;
   text-align: center;
+  font-size: 1.2rem;
+  color: #7a003c;
+  font-weight: bold;
   z-index: 10;
 }
 
-#contador h1 {
-  font-size: 1.8em;
-  margin-bottom: 10px;
-}
-
-#tiempo {
-  font-size: 1.2em;
-  background: rgba(255,255,255,0.25);
-  padding: 12px 20px;
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-}
-
-/* ====== CORAZONES ====== */
-.corazon {
+/* ===== CORAZONES QUE CAEN ===== */
+.heart-fall {
   position: fixed;
-  top: -10%;
+  top: -20px;
   font-size: 20px;
-  color: rgba(255, 105, 180, 0.8);
-  animation: caer linear infinite;
+  animation: fall linear forwards;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* ===== CORAZONES AL TOCAR ===== */
+.heart-click {
+  position: absolute;
+  font-size: 18px;
+  animation: explode 1.2s ease-out forwards;
   pointer-events: none;
 }
 
-@keyframes caer {
+@keyframes explode {
   0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
+    transform: scale(0.5) translate(0,0);
     opacity: 1;
   }
   100% {
-    transform: translateY(120vh) translateX(40px) rotate(360deg);
+    transform: scale(1.5) translate(var(--x), var(--y));
     opacity: 0;
   }
 }
@@ -64,16 +67,12 @@ body {
 
 <body>
 
-<div id="contador">
-  <h1>Todo empezó hace:</h1>
-  <div id="tiempo">Cargando...</div>
-</div>
+<div id="contador">Todo empezó hace:</div>
 
 <script>
-/* ====== FECHA INICIAL ====== */
+/* ===== CONTADOR ===== */
 const inicio = new Date("2025-09-08T21:00:00");
 
-/* ====== CONTADOR ====== */
 function actualizarContador() {
   const ahora = new Date();
   let diff = ahora - inicio;
@@ -87,32 +86,46 @@ function actualizarContador() {
   const minutos = Math.floor(diff / (1000 * 60));
   const segundos = Math.floor((diff / 1000) % 60);
 
-  document.getElementById("tiempo").textContent =
-    `${dias} días · ${horas} horas · ${minutos} minutos · ${segundos} segundos`;
+  document.getElementById("contador").innerHTML =
+    `Todo empezó hace: ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
 }
 
 setInterval(actualizarContador, 1000);
 actualizarContador();
 
-/* ====== CORAZONES ====== */
-function crearCorazon() {
-  const corazon = document.createElement("div");
-  corazon.classList.add("corazon");
-  corazon.innerHTML = "❤";
+/* ===== CORAZONES CAYENDO ===== */
+const corazones = ["💗","💖","💞","💕","💓"];
 
-  corazon.style.left = Math.random() * 100 + "vw";
-  corazon.style.fontSize = (15 + Math.random() * 25) + "px";
-  corazon.style.animationDuration = (6 + Math.random() * 4) + "s";
-  corazon.style.opacity = Math.random();
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart-fall";
+  heart.innerText = corazones[Math.floor(Math.random() * corazones.length)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (6 + Math.random() * 4) + "s";
 
-  document.body.appendChild(corazon);
+  document.body.appendChild(heart);
 
-  setTimeout(() => {
-    corazon.remove();
-  }, 10000);
-}
+  setTimeout(() => heart.remove(), 10000);
+}, 600);
 
-setInterval(crearCorazon, 400);
+/* ===== CORAZONES AL TOCAR ===== */
+document.addEventListener("click", (e) => {
+  for (let i = 0; i < 14; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart-click";
+    heart.innerText = corazones[Math.floor(Math.random() * corazones.length)];
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+
+    const x = (Math.random() * 200 - 100) + "px";
+    const y = (Math.random() * 200 - 100) + "px";
+    heart.style.setProperty("--x", x);
+    heart.style.setProperty("--y", y);
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1200);
+  }
+});
 </script>
 
 </body>
