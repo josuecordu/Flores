@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuestra historia comenzó hace:</title>
+<title>Nuestra historia</title>
 
-<!-- GOOGLE FONTS -->
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
 html, body {
@@ -14,11 +13,11 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    font-family: Arial, sans-serif;
     background: radial-gradient(circle at top, #ffd6e9, #f6a6c9, #e070a8);
+    font-family: Arial, sans-serif;
 }
 
-/* ===== CONTADOR ===== */
+/* CONTADOR */
 #counter-wrapper {
     position: fixed;
     top: 18px;
@@ -33,129 +32,102 @@ html, body {
     color: #b8326a;
     padding: 10px 18px;
     border-radius: 25px;
-    font-size: 16px;
+    font-size: 15px;
     backdrop-filter: blur(6px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* ===== BOTON CENTRAL ===== */
+/* BOTÓN VER */
 #viewButton {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Dancing Script', cursive;
-    font-size: 48px;
+    font-size: 42px;
     color: #c2185b;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
-    width: 180px;
-    height: 180px;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.35);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 20;
-    text-shadow: 0 0 10px rgba(194,24,91,0.7);
-    transition: transform 0.2s, background 0.3s;
 }
 
-#viewButton:hover {
-    transform: translate(-50%, -50%) scale(1.05);
-    background: rgba(255, 255, 255, 0.25);
-}
-
-/* ===== POEMA ===== */
+/* BURBUJA DEL POEMA */
 #poem {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 420px;
+    max-height: 65vh;          /* ← CLAVE */
+    padding: 25px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 25px;
     font-family: 'Dancing Script', cursive;
-    font-size: 36px;
+    font-size: 26px;           /* más legible */
     color: #c2185b;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 30px;
-    border-radius: 20px;
     text-align: center;
-    display: none; /* oculto hasta presionar botón */
+    overflow-y: auto;          /* ← SCROLL */
+    display: none;
     z-index: 19;
-    max-width: 90%;
-    box-shadow: 0 0 20px rgba(194,24,91,0.5);
+    box-shadow: 0 0 25px rgba(194,24,91,0.4);
 }
 
-/* ===== CORAZONES CAYENDO ===== */
+/* SCROLL SUAVE */
+#poem::-webkit-scrollbar {
+    width: 6px;
+}
+#poem::-webkit-scrollbar-thumb {
+    background: rgba(194,24,91,0.6);
+    border-radius: 10px;
+}
+
+/* CORAZONES */
 .falling-heart {
     position: fixed;
     top: -20px;
     font-size: 18px;
-    color: rgba(255, 120, 180, 0.7);
+    color: rgba(255,120,180,0.7);
     animation: fall linear infinite;
 }
 
 @keyframes fall {
     to { transform: translateY(110vh); }
 }
-
-/* ===== TOQUE 1 DEDO ===== */
-.touch-heart {
-    position: fixed;
-    font-size: 20px;
-    color: #ff4f9a;
-    pointer-events: none;
-    animation: pop 0.8s ease-out forwards;
-}
-
-@keyframes pop {
-    0% { transform: scale(0); opacity: 1; }
-    100% {
-        transform: scale(1.4) translate(var(--x), var(--y));
-        opacity: 0;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<!-- CONTADOR -->
 <div id="counter-wrapper">
     <div id="counter"></div>
 </div>
 
-<!-- BOTON CENTRAL -->
 <div id="viewButton">Ver</div>
 
-<!-- POEMA -->
 <div id="poem">
-    No fue tu belleza lo que me quedó,<br>
-fue tu manera de estar en el mundo.<br>
-La forma en que haces hogar el silencio<br>
-y vuelves simple lo importante.<br>
-Sin darme cuenta,<br>
-mi corazón aprendió tu ritmo<br>
-y decidió quedarse ahí,<br>
-sin dudas.<br>
-Hay amores que se sienten completos,<br>
-que no necesitan promesas habladas.<br>
-El mío camina contigo<br>
-como quien ya sabe su destino.<br>
-No es una pregunta ni un intento,<br>
-es una certeza tranquila:<br>
-el futuro,<br>
-cuando lo pienso,<br>
-tiene tu nombre.<br>
-    
+    Aquí puedes escribir un poema largo sin problema.<br><br>
+    Aunque tenga muchas líneas,<br>
+    se podrá leer completo<br>
+    deslizando hacia abajo.<br><br>
+    Cada palabra queda dentro<br>
+    de esta burbuja suave,<br>
+    hecha para leerse con calma,<br>
+    sin perder nada.<br><br>
+    💗
 </div>
 
-<!-- AUDIO DE FONDO -->
 <audio id="bgMusic" src="Luis Miguel - Sabes Una Cosa(MP3_160K).mp3" loop></audio>
 
 <script>
-/* ===== CONTADOR ===== */
+/* CONTADOR */
 const startDate = new Date("2025-09-08T21:00:00");
-
 function updateCounter() {
     const now = new Date();
     let diff = Math.floor((now - startDate) / 1000);
@@ -168,7 +140,7 @@ function updateCounter() {
 setInterval(updateCounter, 1000);
 updateCounter();
 
-/* ===== CORAZONES CAYENDO ===== */
+/* CORAZONES */
 setInterval(() => {
     const h = document.createElement("div");
     h.className = "falling-heart";
@@ -179,45 +151,15 @@ setInterval(() => {
     setTimeout(() => h.remove(), 10000);
 }, 420);
 
-/* ===== TOUCH 1 DEDO ===== */
-function spawnTouchHearts(x, y) {
-    for (let i = 0; i < 8; i++) {
-        const h = document.createElement("div");
-        h.className = "touch-heart";
-        h.textContent = "❤";
-        h.style.left = x + "px";
-        h.style.top = y + "px";
-        h.style.setProperty("--x", (Math.random() * 40 - 20) + "px");
-        h.style.setProperty("--y", (Math.random() * 40 - 20) + "px");
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 800);
-    }
-}
+/* BOTÓN VER */
+const viewButton = document.getElementById("viewButton");
+const poem = document.getElementById("poem");
+const bgMusic = document.getElementById("bgMusic");
 
-document.addEventListener("touchstart", e => {
-    if (e.touches.length === 1)
-        spawnTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
-});
-
-document.addEventListener("touchmove", e => {
-    if (e.touches.length === 1)
-        spawnTouchHearts(e.touches[0].clientX, e.touches[0].clientY);
-});
-
-/* ===== BOTON VER ===== */
-const viewButton = document.getElementById('viewButton');
-const poem = document.getElementById('poem');
-const bgMusic = document.getElementById('bgMusic');
-
-viewButton.addEventListener('click', () => {
-    // Reproducir música
-    bgMusic.play().catch(err => console.log(err));
-
-    // Mostrar poema
-    poem.style.display = 'block';
-
-    // Ocultar el botón
-    viewButton.style.display = 'none';
+viewButton.addEventListener("click", () => {
+    bgMusic.play().catch(()=>{});
+    poem.style.display = "block";
+    viewButton.style.display = "none";
 });
 </script>
 
