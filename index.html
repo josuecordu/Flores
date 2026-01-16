@@ -3,89 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo</title>
+<title>Todo empezó hace</title>
+
 <style>
-    body {
-        margin: 0;
-        width: 100vw;
-        height: 100vh;
-        background: black;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-    }
+/* ====== FONDO ====== */
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background: radial-gradient(circle at top, #ffd6e8, #f7a8c9);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #fff;
+}
 
-    #openBtn, #stopBtn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px 40px;
-        font-size: 24px;
-        cursor: pointer;
-        border: none;
-    }
+/* ====== CONTADOR ====== */
+#contador {
+  margin-top: 30px;
+  text-align: center;
+  z-index: 10;
+}
 
-    #openBtn {
-        background: white;
-        color: black;
-    }
+#contador h1 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
 
-    #stopBtn {
-        display: none;
-        background: red;
-        color: white;
-        top: 90%;
-    }
+#tiempo {
+  font-size: 1.2em;
+  background: rgba(255,255,255,0.25);
+  padding: 12px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
 
-    .chupe {
-        position: absolute;
-        background: white;
-        color: black;
-        border: none;
-        padding: 5px 10px;
-        pointer-events: none;
-    }
+/* ====== CORAZONES ====== */
+.corazon {
+  position: fixed;
+  top: -10%;
+  font-size: 20px;
+  color: rgba(255, 105, 180, 0.8);
+  animation: caer linear infinite;
+  pointer-events: none;
+}
+
+@keyframes caer {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh) translateX(40px) rotate(360deg);
+    opacity: 0;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<button id="openBtn">Abrir</button>
-<button id="stopBtn">DETENER</button>
+<div id="contador">
+  <h1>Todo empezó hace:</h1>
+  <div id="tiempo">Cargando...</div>
+</div>
 
 <script>
-let interval;
-let size = 12;
-let count = 0;
-const MAX = 300; // límite de seguridad
+/* ====== FECHA INICIAL ====== */
+const inicio = new Date("2025-09-08T21:00:00");
 
-const openBtn = document.getElementById("openBtn");
-const stopBtn = document.getElementById("stopBtn");
+/* ====== CONTADOR ====== */
+function actualizarContador() {
+  const ahora = new Date();
+  let diff = ahora - inicio;
 
-openBtn.onclick = () => {
-    openBtn.style.display = "none";
-    stopBtn.style.display = "block";
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff %= (1000 * 60 * 60 * 24);
 
-    interval = setInterval(() => {
-        if (count >= MAX) return;
+  const horas = Math.floor(diff / (1000 * 60 * 60));
+  diff %= (1000 * 60 * 60);
 
-        const btn = document.createElement("button");
-        btn.className = "chupe";
-        btn.textContent = "chupe";
-        btn.style.fontSize = size + "px";
+  const minutos = Math.floor(diff / (1000 * 60));
+  const segundos = Math.floor((diff / 1000) % 60);
 
-        btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-        btn.style.top = Math.random() * (window.innerHeight - 40) + "px";
+  document.getElementById("tiempo").textContent =
+    `${dias} días · ${horas} horas · ${minutos} minutos · ${segundos} segundos`;
+}
 
-        document.body.appendChild(btn);
+setInterval(actualizarContador, 1000);
+actualizarContador();
 
-        size += 2;
-        count++;
-    }, 30);
-};
+/* ====== CORAZONES ====== */
+function crearCorazon() {
+  const corazon = document.createElement("div");
+  corazon.classList.add("corazon");
+  corazon.innerHTML = "❤";
 
-stopBtn.onclick = () => {
-    clearInterval(interval);
-};
+  corazon.style.left = Math.random() * 100 + "vw";
+  corazon.style.fontSize = (15 + Math.random() * 25) + "px";
+  corazon.style.animationDuration = (6 + Math.random() * 4) + "s";
+  corazon.style.opacity = Math.random();
+
+  document.body.appendChild(corazon);
+
+  setTimeout(() => {
+    corazon.remove();
+  }, 10000);
+}
+
+setInterval(crearCorazon, 400);
 </script>
 
 </body>
